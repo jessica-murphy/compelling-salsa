@@ -25,3 +25,34 @@ Other CMS features include the following:
 - Integrated audit logs.
 
 [_https://www.techtarget.com/searchcontentmanagement/definition/content-management-system-CMS_]
+
+## MVP I
+
+- Backend Content Management Application
+    - As an enterprise user, I can create a minimal product.
+    - As an enterprise user, I can create content against a product.
+    - As an enterprise user, I can create a product relationship.
+    - As an enterprise user, I can search for current content against a product.
+    - As an enterprise user, I can view version history for content against a product.
+    - As a developer, I can view the authorized user responsible for a previous version.
+    - As an enterprise user, when someone else updates the same product content at the same time, then this is handled gracefully and the user is aware of the result. -> use git parallel working for inspiration
+    - As an enterprise user, when the service restarts during a save, then this is handled gracefully and the user is aware of the result.
+- Backend Content Delivery Application
+- Frontend Content Management Application
+- Frontend Content Delivery Application
+
+## MVP II
+
+- Backend Content Management Application
+    - As an enterprise user, I can roll back to a previous version of content against a product.
+    - As an enterprise user, I can view the authorized user responsible for a previous version.
+    - As an enterprise user, I can create content against multiple products in a single action.
+        - Perhaps via CSV upload? But then pass as JSON
+    - As an enterprise user, when the service restarts during a bulk save, then this is handled gracefully and the user is aware of the result.
+    - Roll-based authentication (who is the user?) and authorization (do they have permission to update this?)
+
+## Extension
+
+- Backend Content Management Application
+    - Templates approved by organization
+    - Help pages, how to use documentation

@@ -19,12 +19,14 @@
  */
 package org.example;
 
-public class App {
-	public String getGreeting() {
-		return "Hello World!";
-	}
+import org.junit.jupiter.api.Test;
 
-	public static void main(String[] args) {
-		System.out.println(new App().getGreeting());
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+class AppTests {
+	@Test
+	void appHasAGreeting() {
+		App classUnderTest = new App();
+		assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
 	}
 }

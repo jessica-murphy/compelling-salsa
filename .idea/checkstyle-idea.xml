@@ -3,14 +3,18 @@
   <component name="CheckStyle-IDEA" serialisationVersion="2">
     <checkstyleVersion>10.15.0</checkstyleVersion>
     <scanScope>JavaOnlyWithTests</scanScope>
-    <option name="thirdPartyClasspath" />
+    <option name="thirdPartyClasspath">
+      <option value="$USER_HOME$/Downloads/spring-javaformat-config-0.0.43.jar" />
+      <option value="$USER_HOME$/Downloads/spring-javaformat-checkstyle-0.0.43.jar" />
+    </option>
     <option name="activeLocationIds">
-      <option value="bundled-google-checks" />
+      <option value="ceb2c530-687b-44d8-b458-141545783379" />
     </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="ceb2c530-687b-44d8-b458-141545783379" type="PROJECT_RELATIVE" scope="All" description="Spring Java Format">$PROJECT_DIR$/config/checkstyle/checkstyle.xml</ConfigurationLocation>
       </list>
     </option>
   </component>

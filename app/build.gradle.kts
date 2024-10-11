@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    checkstyle
 }
 
 repositories {
@@ -35,6 +36,15 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "org.example.App"
+}
+
+checkstyle {
+    val archive = configurations.checkstyle.get().resolve().filter {
+        it.name.startsWith("checkstyle")
+    }
+    config = resources.text.fromArchiveEntry(archive, "google_checks.xml")
+    config = resources.text.fromArchiveEntry(archive, "sun_checks.xml")
+
 }
 
 tasks.named<Test>("test") {

@@ -24,6 +24,8 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:0.0.43")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -39,12 +41,7 @@ application {
 }
 
 checkstyle {
-    val archive = configurations.checkstyle.get().resolve().filter {
-        it.name.startsWith("checkstyle")
-    }
-    config = resources.text.fromArchiveEntry(archive, "google_checks.xml")
-    config = resources.text.fromArchiveEntry(archive, "sun_checks.xml")
-
+    toolVersion = "9.3"
 }
 
 tasks.named<Test>("test") {

@@ -14,7 +14,18 @@
  * limitations under the License.
  */
 
-/**
- * Provides the files required for an example app.
- */
-package org.example;
+package org.thecompany.contentservice.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class HomeController {
+
+	@GetMapping("/")
+	public @ResponseBody String greeting() {
+		return "Hello, World";
+	}
+
+}

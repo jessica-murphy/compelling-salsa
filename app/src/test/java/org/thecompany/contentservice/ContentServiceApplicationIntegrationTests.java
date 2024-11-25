@@ -18,9 +18,12 @@ package org.thecompany.contentservice;
 
 import org.junit.jupiter.api.Test;
 
-class ContentServiceApplicationTests {
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class ContentServiceApplicationIntegrationTests {
 	@Test
-	void serviceCompiles() {
-		// test application compile succeeds
+	void contextLoads() {
+		// test application context succeeds
 	}
 }

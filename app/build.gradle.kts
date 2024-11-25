@@ -9,44 +9,35 @@ plugins {
 	// Apply the application plugin to add support for building a CLI application in Java.
 	application
 	checkstyle
+	java
+	id("org.springframework.boot") version "3.4.0"
+	id("io.spring.dependency-management") version "1.1.6"
 }
 
-repositories {
-	// Use Maven Central for resolving dependencies.
-	mavenCentral()
-}
+group = "com.the-company"
+version = "0.0.1-SNAPSHOT"
 
-dependencies {
-	// Use JUnit Jupiter for testing.
-	testImplementation(libs.junit.jupiter)
-
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-	// This dependency is used by the application.
-	implementation(libs.guava)
-
-	checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:0.0.43")
-
-	testImplementation("org.assertj:assertj-core:3.26.3")
-}
-
-// Apply a specific Java toolchain to ease working on different environments.
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
-application {
-	// Define the main class for the application.
-	mainClass = "org.example.App"
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:0.0.43")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 checkstyle {
 	toolVersion = "9.3"
 }
 
-tasks.named<Test>("test") {
-	// Use JUnit Platform for unit tests.
+tasks.withType<Test> {
 	useJUnitPlatform()
 }

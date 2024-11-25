@@ -13,3 +13,6 @@ The intended use case for this service is to enable an e-commerce product displa
 
 ## Local Setup
 `./gradlew test`
+
+## Architecture Decision Records
+See [.adr-dir](.adr-dir).

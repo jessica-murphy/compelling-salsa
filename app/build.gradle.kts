@@ -26,6 +26,8 @@ dependencies {
 	implementation(libs.guava)
 
 	checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:0.0.43")
+
+	testImplementation("org.assertj:assertj-core:3.26.3")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

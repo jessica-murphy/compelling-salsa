@@ -14,15 +14,5 @@ The intended use case for this service is to enable an e-commerce product displa
 ## Local Setup
 `./gradlew test`
 
-## Testing
-
-### Unit Test
-- Do not spin up Spring context.
-- Make use of mocks when appropriate.
-- Use {class under test}_Tests_ naming convention.
-
-### Integration Test
-- Do spin up Spring context.
-- Avoid use of mocks.
-- Use {class under test}_IntegrationTests_ naming convention.
-- Clean up dataset between tests using appropriate setUp and tearDown methods.
+## Architecture Decision Records
+See [.adr-dir](.adr-dir).

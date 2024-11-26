@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice;
-
-import org.junit.jupiter.api.Test;
-
-class ContentServiceApplicationIntegrationTests extends IntegrationTests {
-	@Test
-	void contextLoads() {
-		// test application context succeeds
-	}
-}
+/**
+ * This module contains classes required to transform the database representation to/from the internal model for each object.
+ *
+ * @since 1.0
+ * @author murphyjes
+ */
+package org.thecompany.contentservice.transformer.data;

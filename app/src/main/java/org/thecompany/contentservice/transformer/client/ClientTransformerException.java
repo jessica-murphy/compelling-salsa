@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice;
+package org.thecompany.contentservice.transformer.client;
 
-import org.junit.jupiter.api.Test;
-
-class ContentServiceApplicationIntegrationTests extends IntegrationTests {
-	@Test
-	void contextLoads() {
-		// test application context succeeds
+public class ClientTransformerException extends RuntimeException {
+	public ClientTransformerException(String message, Throwable cause) {
+		super(message, cause);
 	}
 }

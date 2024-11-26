@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice;
+package org.thecompany.contentservice.repository;
 
-import org.junit.jupiter.api.Test;
+import org.thecompany.contentservice.model.data.Channel;
 
-class ContentServiceApplicationIntegrationTests extends IntegrationTests {
-	@Test
-	void contextLoads() {
-		// test application context succeeds
-	}
+import org.springframework.data.repository.Repository;
+
+public interface ChannelRepository extends Repository<Channel, String> {
+	Channel findChannelByChannelId(String channelName);
+	Channel save(Channel channel);
+	void deleteChannelByChannelId(String channelName);
 }

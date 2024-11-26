@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice;
-
-import org.junit.jupiter.api.Test;
-
-class ContentServiceApplicationIntegrationTests extends IntegrationTests {
-	@Test
-	void contextLoads() {
-		// test application context succeeds
-	}
-}
+/**
+ * This module contains valid data transfer objects which are the client representation to/from each REST controller.
+ *
+ * @since 1.0
+ * @author murphyjes
+ */
+package org.thecompany.contentservice.model.client;

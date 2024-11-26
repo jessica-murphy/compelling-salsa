@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice;
+package org.thecompany.contentservice.service;
 
-import org.junit.jupiter.api.Test;
-
-class ContentServiceApplicationIntegrationTests extends IntegrationTests {
-	@Test
-	void contextLoads() {
-		// test application context succeeds
+public class ResourceNotFoundException extends RuntimeException {
+	public ResourceNotFoundException(String message) {
+		super(message);
 	}
 }

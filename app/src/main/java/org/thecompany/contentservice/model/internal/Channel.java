@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice;
+package org.thecompany.contentservice.model.internal;
 
-import org.junit.jupiter.api.Test;
-
-class ContentServiceApplicationIntegrationTests extends IntegrationTests {
-	@Test
-	void contextLoads() {
-		// test application context succeeds
-	}
-}
+public record Channel(
+	String channelName
+) { }

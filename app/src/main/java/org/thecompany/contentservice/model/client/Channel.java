@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice;
+package org.thecompany.contentservice.model.client;
 
-import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotBlank;
 
-class ContentServiceApplicationIntegrationTests extends IntegrationTests {
-	@Test
-	void contextLoads() {
-		// test application context succeeds
-	}
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record Channel(@NotBlank String channelName) {
 }

@@ -16,7 +16,6 @@
 
 package org.thecompany.contentservice;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -36,11 +35,6 @@ public class IntegrationTests {
 	@BeforeAll
 	static void beforeAll() {
 		postgres.start();
-	}
-
-	@AfterAll
-	static void afterAll() {
-		postgres.stop();
 	}
 
 	@DynamicPropertySource

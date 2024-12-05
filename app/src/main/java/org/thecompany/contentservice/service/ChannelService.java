@@ -22,7 +22,9 @@ import org.thecompany.contentservice.model.internal.Channel;
 import org.thecompany.contentservice.repository.ChannelRepository;
 import org.thecompany.contentservice.transformer.data.ChannelDataTransformer;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class ChannelService {
 	private final ChannelRepository channelRepository;
 	private final ChannelDataTransformer channelDataTransformer;
 
+	@Transactional
 	public Channel getChannel(String channelName) {
 		try {
 			org.thecompany.contentservice.model.data.Channel channel = this.channelRepository.findChannelByChannelId(channelName);
@@ -40,29 +43,34 @@ public class ChannelService {
 			}
 			return this.channelDataTransformer.toInternalRepresentation(channel);
 		}
-		catch (ResourceNotFoundException exception) {
-			throw exception;
-		}
-		catch (Exception exception) {
+		catch (DataAccessException exception) {
 			throw new ResourceRepositoryException(String.format("Failed to retrieve channel '%s'.", channelName), exception);
 		}
 	}
+	@Transactional
 	public Channel createChannel(Channel channel, String username) {
 		try {
+			if (this.channelRepository.existsChannelByChannelId(channel.channelName())) {
+				throw new ResourceAlreadyExistsException(String.format("There already exists a channel with channel name '%s'.", channel.channelName()));
+			}
 			return this.channelDataTransformer.toInternalRepresentation(
 					this.channelRepository.save(
 							this.channelDataTransformer.toDatabaseRepresentation(channel, username)));
 		}
-		catch (Exception exception) {
+		catch (DataAccessException exception) {
 			throw new ResourceRepositoryException(String.format("Failed to save channel '%s'.", channel), exception);
 		}
 	}
+	@Transactional
 	public void deleteChannel(String channelName, String username) {
 		log.info("User {} attempting to delete channelName {}.", username, channelName);
 		try {
+			if (!this.channelRepository.existsChannelByChannelId(channelName)) {
+				throw new ResourceNotFoundException(String.format("No channel with channel name '%s'.", channelName));
+			}
 			this.channelRepository.deleteChannelByChannelId(channelName);
 		}
-		catch (Exception exception) {
+		catch (DataAccessException exception) {
 			throw new ResourceRepositoryException(String.format("Failed to delete channel '%s'.", channelName), exception);
 		}
 	}

@@ -24,4 +24,5 @@ public interface ChannelRepository extends Repository<Channel, String> {
 	Channel findChannelByChannelId(String channelName);
 	Channel save(Channel channel);
 	void deleteChannelByChannelId(String channelName);
+	boolean existsChannelByChannelId(String channelName);
 }

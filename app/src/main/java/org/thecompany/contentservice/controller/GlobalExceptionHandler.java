@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.thecompany.contentservice.service.ResourceAlreadyExistsException;
 import org.thecompany.contentservice.service.ResourceNotFoundException;
 import org.thecompany.contentservice.service.ResourceRepositoryException;
+import org.thecompany.contentservice.transformer.client.ClientTransformerException;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public HttpEntity<String> handle(ResourceAlreadyExistsException resourceAlreadyExistsException) {
 		log.warn(resourceAlreadyExistsException.getMessage(), resourceAlreadyExistsException);
 		return new HttpEntity<>(resourceAlreadyExistsException.getMessage());
+	}
+	@ExceptionHandler(ClientTransformerException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public HttpEntity<String> handle(ClientTransformerException clientTransformerException) {
+		log.error(clientTransformerException.getMessage(), clientTransformerException);
+		return new HttpEntity<>(clientTransformerException.getMessage());
 	}
 }

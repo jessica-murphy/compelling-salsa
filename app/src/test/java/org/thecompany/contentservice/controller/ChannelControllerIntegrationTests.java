@@ -16,8 +16,7 @@
 
 package org.thecompany.contentservice.controller;
 
-import java.net.URI;
-
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.thecompany.contentservice.IntegrationTests;
 import org.thecompany.contentservice.model.client.Channel;
@@ -26,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,21 +37,19 @@ class ChannelControllerIntegrationTests extends IntegrationTests {
 	private TestRestTemplate restTemplate;
 	private static final String CHANNEL_PATH = "channel/v1";
 	private static final String CHANNEL = "myprotein";
+	private static final String NOT_EXISTING_CHANNEL = "notExisting";
 	private static final String USERNAME = "Arnold Schwarzenegger";
-
-//	@Test
-//	void shouldRetrieveAnExistingChannel() {
-//		assertThat(this.restTemplate.getForEntity(getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL, String.class)
-//				.getStatusCode())
-//				.as("Expected retrieval of an existing channelName to return a success response.")
-//				.isEqualTo(HttpStatus.OK);
-//	}
-
+	@AfterEach
+	void tearDown() {
+		tearDownChannel(CHANNEL);
+		tearDownChannel(NOT_EXISTING_CHANNEL);
+	}
 	@Test
 	void shouldFailToRetrieveNonExistentChannel() {
-		assertThat(this.restTemplate.getForEntity(getBaseUrl() + CHANNEL_PATH + "/notExisting", String.class)
+		String getRequestUrl = getBaseUrl() + CHANNEL_PATH + "/" + NOT_EXISTING_CHANNEL;
+		assertThat(this.restTemplate.getForEntity(getRequestUrl, String.class)
 				.getStatusCode())
-				.as("Expected retrieval of a non existent channelName to return a not found response.")
+				.as("Expected retrieval of a non existent channel to return a not found response.")
 				.isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
@@ -63,12 +61,8 @@ class ChannelControllerIntegrationTests extends IntegrationTests {
 		Channel channelJson = new Channel(CHANNEL);
 		HttpEntity<Channel> requestEntity = new HttpEntity<>(channelJson, headers);
 		String postRequestUrl = getBaseUrl() + CHANNEL_PATH + "/";
-		URI responseLocation = this.restTemplate.postForLocation(postRequestUrl, requestEntity);
-		Channel responseBody = this.restTemplate.postForObject(postRequestUrl, requestEntity, Channel.class);
-
 		String getRequestUrl = getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL;
-//		assertThat(String.valueOf(responseLocation))
-//				.isEqualTo(getRequestUrl);
+
 		// resource can be created
 		ResponseEntity<Channel> postResponseEntity = this.restTemplate.postForEntity(postRequestUrl, requestEntity, Channel.class);
 		assertThat(postResponseEntity.getStatusCode())
@@ -76,48 +70,68 @@ class ChannelControllerIntegrationTests extends IntegrationTests {
 				.isEqualTo(HttpStatus.CREATED);
 		assertThat(postResponseEntity.getHeaders().get(HttpHeaders.LOCATION))
 				.as("Expected the location of the created resource to be returned.")
-				.containsExactly(getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL);
+				.containsExactly(getRequestUrl);
 		assertThat(postResponseEntity.getBody())
 				.as("Expected the body to contain the created resource for confirmation.")
 				.isEqualTo(channelJson);
 		// resource can be retrieved after creation
-		ResponseEntity<Channel> getResponseEntity = this.restTemplate.getForEntity(getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL, Channel.class);
+		ResponseEntity<Channel> getResponseEntity = this.restTemplate.getForEntity(getRequestUrl, Channel.class);
 		assertThat(getResponseEntity.getStatusCode())
 				.as("Expected retrieval of existing channel to return a success response.")
 				.isEqualTo(HttpStatus.OK);
 	}
-//
-//	@Test
-//	void shouldFailToCreateExistingChannel() {
-//		assertThat(this.restTemplate.getForEntity(getBaseUrl() + CHANNEL_PATH + "/notExisting" , String.class)
-//				.getStatusCode())
-//				.as("Expected creation of an existing channelName to return a bad request response.")
-//				.isEqualTo(HttpStatus.NOT_FOUND);
-//		Channel channelJson = new Channel(CHANNEL);
-//
-//		assertThatThrownBy(() -> this.restTemplate.put(getBaseUrl() + CHANNEL_PATH + "/notExisting", channelJson))
-//				.as("Expected creation of an existing channelName to return a success response.")
-//				.isInstanceOf(RestClientException.class)
-//				.hasMessageContaining(HttpStatus.BAD_REQUEST.getReasonPhrase());
-//	}
-//
-//	@Test
-//	void shouldDeleteExistingChannel() {
-//		assertThatThrownBy(() -> this.restTemplate.delete(getBaseUrl() + CHANNEL_PATH + "/notExisting"))
-//				.as("Expected creation of an existing channelName to return a success response.")
-//				.hasMessageContaining(HttpStatus.BAD_REQUEST.getReasonPhrase());
-//	}
-//
-//	@Test // todo: fails because no way to tell if the thing previously existed
-//	void shouldFailToDeleteNonExistentChannel() {
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		headers.add("username", USERNAME);
-//		HttpEntity<Channel> requestEntity = new HttpEntity<>(headers);
-//
-//		assertThat(this.restTemplate.exchange(getBaseUrl() + CHANNEL_PATH + "/notExisting", HttpMethod.DELETE, requestEntity, Void.class)
-//				.getStatusCode())
-//				.as("Expected deletion of a non-existent channelName to return a not found response.")
-//				.isEqualTo(HttpStatus.NOT_FOUND);
-//	}
+	@Test
+	void shouldFailToCreateExistingChannel() {
+		restfulChannelCreation();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("username", USERNAME);
+		Channel channelJson = new Channel(CHANNEL);
+		HttpEntity<Channel> requestEntity = new HttpEntity<>(channelJson, headers);
+		String postRequestUrl = getBaseUrl() + CHANNEL_PATH + "/";
+
+		// resource is rejected because it already exists
+		ResponseEntity<String> postResponseEntity = this.restTemplate.postForEntity(postRequestUrl, requestEntity, String.class);
+		assertThat(postResponseEntity.getStatusCode())
+				.as("Expected creation of an already-existing channel to return a bad request response.")
+				.isEqualTo(HttpStatus.BAD_REQUEST);
+	}
+	@Test
+	void shouldDeleteExistingChannel() {
+		restfulChannelCreation();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("username", USERNAME);
+		HttpEntity<Channel> requestEntity = new HttpEntity<>(headers);
+		String deleteRequestUrl = getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL;
+		ResponseEntity<Void> deleteResponseEntity = this.restTemplate.exchange(deleteRequestUrl, HttpMethod.DELETE, requestEntity, Void.class);
+		assertThat(deleteResponseEntity.getStatusCode())
+				.as("Expected deletion of an existing channel to return a success response.")
+				.isEqualTo(HttpStatus.NO_CONTENT);
+	}
+	@Test
+	void shouldFailToDeleteNonExistentChannel() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("username", USERNAME);
+		HttpEntity<Channel> requestEntity = new HttpEntity<>(headers);
+
+		assertThat(this.restTemplate.exchange(getBaseUrl() + CHANNEL_PATH + "/" + NOT_EXISTING_CHANNEL, HttpMethod.DELETE, requestEntity, Void.class)
+				.getStatusCode())
+				.as("Expected deletion of a non-existent channel to return a not found response.")
+				.isEqualTo(HttpStatus.NOT_FOUND);
+	}
+	private void tearDownChannel(String channelName) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("username", "tearDown");
+		HttpEntity<Channel> requestEntity = new HttpEntity<>(headers);
+		String deleteRequestUrl = getBaseUrl() + CHANNEL_PATH + "/" + channelName;
+		ResponseEntity<Void> deleteResponseEntity = this.restTemplate.exchange(deleteRequestUrl, HttpMethod.DELETE, requestEntity, Void.class);
+		assertThat(deleteResponseEntity.getStatusCode())
+				.as("Expected either channel did not exist or delete returns a success response.")
+				.isIn(HttpStatus.NO_CONTENT, HttpStatus.NOT_FOUND);
+	}
 }

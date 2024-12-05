@@ -20,6 +20,8 @@ Easier initial setup of service.
 
 Spring Data JPA enforces some conventions. This creates less flexibility which at initial stages is a good thing but may not scale well.
 
+One such convention is the lack of a built-in insert option. Instead `repository.save()` performs an upsert. If other behaviour, eg. insert, is desired it must be implemented by the developer.
+
 Spring Data JPA adds a layer of abstraction which can inadvertently impact performance. Developers should familiarise with common pitfalls.
 
 Useful resources:

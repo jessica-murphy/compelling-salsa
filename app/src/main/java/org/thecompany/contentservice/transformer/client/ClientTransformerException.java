@@ -20,4 +20,8 @@ public class ClientTransformerException extends RuntimeException {
 	public ClientTransformerException(String message, Throwable cause) {
 		super(message, cause);
 	}
+
+	public ClientTransformerException(String message) {
+		super(message);
+	}
 }

@@ -16,15 +16,19 @@
 
 package org.thecompany.contentservice.transformer.client;
 
-import java.net.URI;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
+
 @Component
+@RequiredArgsConstructor
 public class ChannelClientTransformer {
+	private final ResourceLocationTransformer resourceLocationTransformer;
+
 	public org.thecompany.contentservice.model.internal.Channel fromRequest(org.thecompany.contentservice.model.client.Channel clientModel) {
 		try {
 			String channelName = clientModel.channelName();
@@ -36,13 +40,10 @@ public class ChannelClientTransformer {
 	}
 	public HttpEntity<org.thecompany.contentservice.model.client.Channel> toResponse(org.thecompany.contentservice.model.internal.Channel internalModel) {
 		try {
-			String channel = internalModel.channelName();
 			org.thecompany.contentservice.model.client.Channel responseBody = new org.thecompany.contentservice.model.client.Channel(internalModel.channelName());
-			// todo: make dynamic
-			URI location = URI.create("http://localhost:8080/channel/v1/" + channel);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.add(HttpHeaders.LOCATION, location.toString());
+			headers.add(HttpHeaders.LOCATION, this.resourceLocationTransformer.retrieveChannelUri(internalModel.channelName()));
 			return new HttpEntity<>(responseBody, headers);
 		}
 		catch (Exception exception) {

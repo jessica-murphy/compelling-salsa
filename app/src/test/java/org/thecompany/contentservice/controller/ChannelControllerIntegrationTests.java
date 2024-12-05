@@ -22,13 +22,13 @@ import org.junit.jupiter.api.Test;
 import org.thecompany.contentservice.IntegrationTests;
 import org.thecompany.contentservice.model.client.Channel;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -69,15 +69,21 @@ class ChannelControllerIntegrationTests extends IntegrationTests {
 		String getRequestUrl = getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL;
 //		assertThat(String.valueOf(responseLocation))
 //				.isEqualTo(getRequestUrl);
-
-		assertThat(this.restTemplate.postForEntity(postRequestUrl, requestEntity, Channel.class)
-				.getStatusCode())
-				.as("Expected creation of a non existent channelName to return a success response.")
+		// resource can be created
+		ResponseEntity<Channel> postResponseEntity = this.restTemplate.postForEntity(postRequestUrl, requestEntity, Channel.class);
+		assertThat(postResponseEntity.getStatusCode())
+				.as("Expected creation of a not-previously-existing channel to return a success response.")
 				.isEqualTo(HttpStatus.CREATED);
-
-		assertThat(this.restTemplate.getForEntity(getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL, String.class)
-				.getStatusCode())
-				.as("Expected retrieval of existing channelName to return a success response.")
+		assertThat(postResponseEntity.getHeaders().get(HttpHeaders.LOCATION))
+				.as("Expected the location of the created resource to be returned.")
+				.containsExactly(getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL);
+		assertThat(postResponseEntity.getBody())
+				.as("Expected the body to contain the created resource for confirmation.")
+				.isEqualTo(channelJson);
+		// resource can be retrieved after creation
+		ResponseEntity<Channel> getResponseEntity = this.restTemplate.getForEntity(getBaseUrl() + CHANNEL_PATH + "/" + CHANNEL, Channel.class);
+		assertThat(getResponseEntity.getStatusCode())
+				.as("Expected retrieval of existing channel to return a success response.")
 				.isEqualTo(HttpStatus.OK);
 	}
 //

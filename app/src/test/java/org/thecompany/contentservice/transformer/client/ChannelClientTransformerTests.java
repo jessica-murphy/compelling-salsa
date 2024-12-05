@@ -18,6 +18,7 @@ package org.thecompany.contentservice.transformer.client;
 
 import java.net.URI;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.http.HttpEntity;
@@ -25,9 +26,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 class ChannelClientTransformerTests {
-	private final ChannelClientTransformer channelClientTransformer = new ChannelClientTransformer();
+	private final ResourceLocationTransformer resourceLocationTransformer = mock(ResourceLocationTransformer.class);
+	private final ChannelClientTransformer channelClientTransformer = new ChannelClientTransformer(this.resourceLocationTransformer);
 	private static final String CHANNEL = "myprotein";
 	private static final String LOCATION = "test/location";
 
@@ -42,13 +46,13 @@ class ChannelClientTransformerTests {
 
 	@Test
 	void toResponse() {
+		doReturn(LOCATION).when(this.resourceLocationTransformer).retrieveChannelUri(CHANNEL);
 		org.thecompany.contentservice.model.internal.Channel internalModel = new org.thecompany.contentservice.model.internal.Channel(CHANNEL);
 		org.thecompany.contentservice.model.client.Channel responseBody = new org.thecompany.contentservice.model.client.Channel(CHANNEL);
 
-		URI location = URI.create("http://localhost:8080/channel/v1/" + CHANNEL);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.add(HttpHeaders.LOCATION, location.toString());
+		headers.add(HttpHeaders.LOCATION, LOCATION);
 		HttpEntity<org.thecompany.contentservice.model.client.Channel> expected = new HttpEntity<>(responseBody, headers);
 		assertThat(this.channelClientTransformer.toResponse(internalModel))
 				.as("Expected internal model to be transformed into client model.")

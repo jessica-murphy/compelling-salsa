@@ -40,6 +40,7 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	testImplementation("org.testcontainers:postgresql")
 	implementation("org.liquibase:liquibase-core")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4")
 }
 
 checkstyle {

@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice.controller;
+package org.thecompany.contentservice.repository;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.thecompany.contentservice.model.data.Channel;
 
-@RestController
-public class HomeController {
+import org.springframework.data.repository.Repository;
 
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello, World";
-	}
-
+public interface ChannelRepository extends Repository<Channel, String> {
+	Channel findChannelByChannelId(String channelName);
+	Channel save(Channel channel);
+	void deleteChannelByChannelId(String channelName);
+	boolean existsChannelByChannelId(String channelName);
 }

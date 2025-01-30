@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice.controller;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class HomeController {
-
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello, World";
-	}
-
-}
+/**
+ * This module contains classes for each resource's repository.
+ *
+ * @since 1.0
+ * @author murphyjes
+ */
+package org.thecompany.contentservice.repository;

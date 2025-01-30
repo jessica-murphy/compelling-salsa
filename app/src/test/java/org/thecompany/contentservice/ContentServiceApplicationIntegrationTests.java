@@ -18,10 +18,7 @@ package org.thecompany.contentservice;
 
 import org.junit.jupiter.api.Test;
 
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class ContentServiceApplicationIntegrationTests {
+class ContentServiceApplicationIntegrationTests extends IntegrationTests {
 	@Test
 	void contextLoads() {
 		// test application context succeeds

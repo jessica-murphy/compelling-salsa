@@ -32,6 +32,14 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	compileOnly("org.projectlombok:lombok:1.18.36")
+	annotationProcessor("org.projectlombok:lombok:1.18.36")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.postgresql:postgresql")
+	testImplementation("org.testcontainers:postgresql")
+	implementation("org.liquibase:liquibase-core")
 }
 
 checkstyle {

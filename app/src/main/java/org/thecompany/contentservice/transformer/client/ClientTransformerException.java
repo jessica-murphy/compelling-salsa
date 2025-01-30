@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice.controller;
+package org.thecompany.contentservice.transformer.client;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class HomeController {
-
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello, World";
+public class ClientTransformerException extends RuntimeException {
+	public ClientTransformerException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
+	public ClientTransformerException(String message) {
+		super(message);
+	}
 }

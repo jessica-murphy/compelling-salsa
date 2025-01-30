@@ -14,17 +14,11 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice.controller;
+package org.thecompany.contentservice.model.client;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotBlank;
 
-@RestController
-public class HomeController {
-
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello, World";
-	}
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record Channel(@NotBlank String channelName) {
 }

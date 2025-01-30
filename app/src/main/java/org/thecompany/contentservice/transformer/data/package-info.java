@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package org.thecompany.contentservice.controller;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class HomeController {
-
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello, World";
-	}
-
-}
+/**
+ * This module contains classes required to transform the database representation to/from the internal model for each object.
+ *
+ * @since 1.0
+ * @author murphyjes
+ */
+package org.thecompany.contentservice.transformer.data;

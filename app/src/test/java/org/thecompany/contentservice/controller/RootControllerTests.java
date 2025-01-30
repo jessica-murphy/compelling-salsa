@@ -17,20 +17,14 @@
 package org.thecompany.contentservice.controller;
 
 import org.junit.jupiter.api.Test;
-import org.thecompany.contentservice.IntegrationTests;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HomeControllerIntegrationTests extends IntegrationTests {
-	@Autowired
-	private TestRestTemplate restTemplate;
-
+class RootControllerTests {
+	private final RootController rootController = new RootController();
 	@Test
 	void defaultUrlShouldReturnMessage() {
-		assertThat(this.restTemplate.getForObject(getBaseUrl(), String.class))
+		assertThat(this.rootController.greeting())
 				.contains("Hello, World")
 				.as("Expected default url to return a greeting message.");
 	}

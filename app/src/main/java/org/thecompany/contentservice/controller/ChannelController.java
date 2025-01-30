@@ -16,6 +16,7 @@
 
 package org.thecompany.contentservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,10 @@ public class ChannelController {
 
 	@GetMapping("/{channelName}")
 	@ResponseStatus(HttpStatus.OK)
+	@Operation(
+			summary = "Retrieve a channel.",
+			description = "Accepts a channel name and returns that channel resource."
+	)
 	public HttpEntity<org.thecompany.contentservice.model.client.Channel> getChannel(
 			@PathVariable String channelName
 	) {
@@ -53,6 +58,10 @@ public class ChannelController {
 
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
+	@Operation(
+			summary = "Create a channel.",
+			description = "Accepts a channel resource and returns the created channel resource."
+	)
 	public HttpEntity<org.thecompany.contentservice.model.client.Channel> createChannel(
 			@RequestBody @Valid org.thecompany.contentservice.model.client.Channel channelJson,
 			@RequestHeader @NotBlank String username
@@ -64,6 +73,10 @@ public class ChannelController {
 
 	@DeleteMapping("/{channelName}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@Operation(
+			summary = "Delete a channel.",
+			description = "Accepts a channel name and removes that channel resource."
+	)
 	public void deleteChannel(
 			@PathVariable @NotBlank String channelName,
 			@RequestHeader @NotBlank String username

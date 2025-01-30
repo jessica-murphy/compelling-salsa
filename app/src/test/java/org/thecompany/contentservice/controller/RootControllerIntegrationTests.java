@@ -16,15 +16,22 @@
 
 package org.thecompany.contentservice.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.junit.jupiter.api.Test;
+import org.thecompany.contentservice.IntegrationTests;
 
-@RestController
-public class HomeController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello, World";
+import static org.assertj.core.api.Assertions.assertThat;
+
+class RootControllerIntegrationTests extends IntegrationTests {
+	@Autowired
+	private TestRestTemplate restTemplate;
+
+	@Test
+	void defaultUrlShouldReturnMessage() {
+		assertThat(this.restTemplate.getForObject(getBaseUrl(), String.class))
+				.contains("Hello, World")
+				.as("Expected default url to return a greeting message.");
 	}
-
 }

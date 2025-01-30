@@ -7,9 +7,10 @@ Content Management Application backend intended to let users design, create, mod
 The intended use case for this service is to enable an e-commerce product display page.
 
 ## Tech Stack
-|                                                                                                                               |                                                                                                                                                                       | |
-|:-----------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------:|
-| <img height="100" alt="Github" src="https://static-00.iconduck.com/assets.00/github-icon-512x500-i14wp164.png"> <p>GitHub</p> |                 <img height="100" alt="Java 21 icon" src="https://static-00.iconduck.com/assets.00/java-icon-1511x2048-6ikx8301.png"> <p>Java 21</p>                  |<img height="100" alt="Gradle icon" src="https://static-00.iconduck.com/assets.00/file-type-light-gradle-icon-512x377-slv3rykw.png"> <p>Gradle</p>|
+|                                                                                                                                              |                                                                                                                                     |                                                                                                                                                   |
+|:--------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------:|
+| <img height="50" alt="Github Actions" src="https://static-00.iconduck.com/assets.00/github-icon-512x500-i14wp164.png"> <p>Github Actions</p> | <img height="50" alt="Java 21 icon" src="https://static-00.iconduck.com/assets.00/java-icon-1511x2048-6ikx8301.png"> <p>Java 21</p> | <img height="50" alt="Gradle icon" src="https://static-00.iconduck.com/assets.00/file-type-light-gradle-icon-512x377-slv3rykw.png"> <p>Gradle</p> |
+|                                                                                                                                              |                                                                                                                                     |                                                                                                                                                   |
 
 ## Local Setup
 ### Test
@@ -25,5 +26,13 @@ No standalone container needed due to testcontainers.
 
 Service available at http://localhost:8080/.
 
-## Architecture Decision Records
+## Documentation
+
+### Endpoints
+UI specification at http://localhost:8080/swagger-ui.html.
+
+API specification at http://localhost:8080/v3/api-docs.
+
+
+### Architecture Decision Records
 See [.adr-dir](.adr-dir).

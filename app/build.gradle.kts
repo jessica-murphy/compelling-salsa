@@ -29,17 +29,17 @@ repositories {
 
 dependencies {
 	checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:0.0.43")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation("org.springframework.boot:spring-boot-starter-web:3.4.0")
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.0")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.3")
 
 	compileOnly("org.projectlombok:lombok:1.18.36")
 	annotationProcessor("org.projectlombok:lombok:1.18.36")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.postgresql:postgresql")
-	testImplementation("org.testcontainers:postgresql")
-	implementation("org.liquibase:liquibase-core")
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.0")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.4.0")
+	implementation("org.postgresql:postgresql:42.7.4")
+	testImplementation("org.testcontainers:postgresql:1.20.4")
+	implementation("org.liquibase:liquibase-core:4.29.2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4")
 }
 

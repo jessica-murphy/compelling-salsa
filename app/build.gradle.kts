@@ -50,3 +50,9 @@ checkstyle {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+configurations.all {
+	resolutionStrategy {
+		force("org.apache.commons:commons-compress:1.26.0")
+	}
+}

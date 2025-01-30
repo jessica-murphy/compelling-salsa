@@ -39,7 +39,7 @@ public class ChannelService {
 			org.thecompany.contentservice.model.data.Channel channel = this.channelRepository.findChannelByChannelId(channelName);
 
 			if (channel == null) {
-				throw new ResourceNotFoundException(String.format("No channel found with name '%s'", channelName));
+				throw new ResourceNotFoundException(String.format("No channel found with name '%s'.", channelName));
 			}
 			return this.channelDataTransformer.toInternalRepresentation(channel);
 		}

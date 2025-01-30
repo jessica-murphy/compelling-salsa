@@ -17,8 +17,11 @@
 package org.thecompany.contentservice.model.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Channel(@NotBlank String channelName) {
+@Schema(description = "Representation of a channel resource with a unique channel name.")
+public record Channel(
+		@Schema(example = "ShopSphere") @NotBlank String channelName) {
 }

@@ -16,16 +16,24 @@
 
 package org.thecompany.contentservice.controller;
 
-import org.junit.jupiter.api.Test;
+import io.swagger.v3.oas.annotations.Operation;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-class HomeControllerTests {
-	private final HomeController homeController = new HomeController();
-	@Test
-	void defaultUrlShouldReturnMessage() {
-		assertThat(this.homeController.greeting())
-				.contains("Hello, World")
-				.as("Expected default url to return a greeting message.");
+@RestController
+public class RootController {
+
+	@GetMapping("/")
+	@ResponseStatus(HttpStatus.OK)
+	@Operation(
+			summary = "Be greeted.",
+			description = "Returns a greeting message for the API. This can be helpful for users to confirm that the API is running."
+	)
+	public String greeting() {
+		return "Hello, World";
 	}
+
 }

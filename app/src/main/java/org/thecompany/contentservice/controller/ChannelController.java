@@ -17,6 +17,7 @@
 package org.thecompany.contentservice.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class ChannelController {
 			description = "Accepts a channel name and returns that channel resource."
 	)
 	public HttpEntity<org.thecompany.contentservice.model.client.Channel> getChannel(
-			@PathVariable String channelName
+			@PathVariable @Schema(example = "ShopSphere") String channelName
 	) {
 		Channel retrievedResource =  this.channelService.getChannel(channelName);
 		return this.channelClientTransformer.toResponse(retrievedResource);
@@ -64,7 +65,7 @@ public class ChannelController {
 	)
 	public HttpEntity<org.thecompany.contentservice.model.client.Channel> createChannel(
 			@RequestBody @Valid org.thecompany.contentservice.model.client.Channel channelJson,
-			@RequestHeader @NotBlank String username
+			@RequestHeader @Schema(example = "David Beckham") @NotBlank String username
 	) {
 		Channel channel = this.channelClientTransformer.fromRequest(channelJson);
 		Channel createdResource = this.channelService.createChannel(channel, username);
@@ -78,8 +79,8 @@ public class ChannelController {
 			description = "Accepts a channel name and removes that channel resource."
 	)
 	public void deleteChannel(
-			@PathVariable @NotBlank String channelName,
-			@RequestHeader @NotBlank String username
+			@PathVariable @Schema(example = "ShopSphere") @NotBlank String channelName,
+			@RequestHeader @Schema(example = "David Beckham") @NotBlank String username
 	) {
 		this.channelService.deleteChannel(channelName, username);
 	}

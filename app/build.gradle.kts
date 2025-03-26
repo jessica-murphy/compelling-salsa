@@ -54,5 +54,6 @@ tasks.withType<Test> {
 configurations.all {
 	resolutionStrategy {
 		force("org.apache.commons:commons-compress:1.26.0")
+		force("net.minidev:json-smart:2.5.2")
 	}
 }

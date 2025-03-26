@@ -10,7 +10,7 @@ plugins {
 	application
 	checkstyle
 	java
-	id("org.springframework.boot") version "3.4.2"
+	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.6"
 }
 
@@ -29,14 +29,14 @@ repositories {
 
 dependencies {
 	checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:0.0.43")
-	implementation("org.springframework.boot:spring-boot-starter-web:3.4.2")
-	testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.2")
+	implementation("org.springframework.boot:spring-boot-starter-web:3.4.4")
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.4")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.3")
 
 	compileOnly("org.projectlombok:lombok:1.18.36")
 	annotationProcessor("org.projectlombok:lombok:1.18.36")
-	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.2")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.4.2")
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.4")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.4.4")
 	implementation("org.postgresql:postgresql:42.7.4")
 	testImplementation("org.testcontainers:postgresql:1.20.4")
 	implementation("org.liquibase:liquibase-core:4.29.2")
@@ -54,5 +54,7 @@ tasks.withType<Test> {
 configurations.all {
 	resolutionStrategy {
 		force("org.apache.commons:commons-compress:1.26.0")
+		force("net.minidev:json-smart:2.5.2")
+		force("com.google.guava:guava:33.4.5-jre")
 	}
 }

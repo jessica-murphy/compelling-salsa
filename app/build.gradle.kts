@@ -55,5 +55,6 @@ configurations.all {
 	resolutionStrategy {
 		force("org.apache.commons:commons-compress:1.26.0")
 		force("net.minidev:json-smart:2.5.2")
+		force("com.google.guava:guava:33.4.5-jre")
 	}
 }

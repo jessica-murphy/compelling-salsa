@@ -1,5 +1,7 @@
 # Content Management Application Service
 
+This is a test.
+
 ## Purpose
 
 Content Management Application backend intended to let users design, create, modify and remove content from a website without the need for Hypertext Markup Language (HTML) knowledge.
